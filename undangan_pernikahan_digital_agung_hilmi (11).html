@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Undangan Pernikahan | Agung & Hilmi</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --sage:#8FAE9B;
+      --sage-dark:#6f8f7f;
+      --ivory:#F9F7F2;
+      --text:#2f3e36;
+    }
+
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      background:linear-gradient(180deg,var(--ivory),#eef3ef);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    section{
+      padding:70px 20px;
+      text-align:center;
+      opacity:0;
+      transform:translateY(50px) scale(0.98);
+      transition:opacity .8s ease, transform .8s cubic-bezier(.22,.61,.36,1);
+
+    }
+
+    section.show{
+      opacity:1;
+      transform:translateY(0) scale(1);
+    }
+
+    section{
+      padding:70px 20px;
+      text-align:center;
+    }
+
+    h1,h2,h3{
+      font-family:'Playfair Display',serif;
+      margin:0 0 16px;
+    }
+
+    h1{font-size:38px;}
+    h2{font-size:28px;}
+    p{max-width:700px;margin:0 auto 12px;line-height:1.7;}
+
+    .cover{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(rgba(249,247,242,.85),rgba(249,247,242,.9)),url('assets/foto-cover.jpg') center/cover no-repeat;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:20px;
+      padding:40px 30px;
+      box-shadow:0 20px 40px rgba(0,0,0,.08);
+      animation:fadeUp 1.2s ease;
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}
+    }
+
+    .names{
+      font-size:42px;
+      color:var(--sage-dark);
+    }
+
+    .divider{
+      width:80px;height:3px;background:var(--sage);margin:20px auto;border-radius:10px;
+    }
+
+    .ayat{
+      font-style:italic;
+      background:var(--ivory);
+      padding:30px;
+      border-radius:16px;
+    }
+
+    .countdown{
+      display:flex;
+      justify-content:center;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-top:30px;
+    }
+
+    .time{
+      background:#fff;
+      padding:20px;
+      width:90px;
+      border-radius:14px;
+      box-shadow:0 10px 25px rgba(0,0,0,.08);
+    }
+
+    .time h3{margin:0;font-size:26px;color:var(--sage-dark);} 
+    .time span{font-size:13px;}
+
+    .profile{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:40px;
+      margin-top:40px;
+    }
+
+    .person{
+      max-width:300px;
+    }
+
+    .person img{
+      width:180px;height:180px;object-fit:cover;border-radius:50%;border:6px solid var(--sage);
+    }
+
+    .event{
+      background:#fff;
+      border-radius:20px;
+      padding:30px;
+      max-width:700px;
+      margin:0 auto 30px;
+      box-shadow:0 15px 35px rgba(0,0,0,.08);
+    }
+
+    /* UKURAN KHUSUS UNTUK PESAN TAMU */
+    #guestMessages .event{
+      padding:18px 20px;
+      margin-bottom:16px;
+    }
+
+    #guestMessages .event h3{
+      font-size:15px;
+      margin-bottom:4px;
+      text-align:left;
+    }
+
+    #guestMessages .event p{
+      font-size:13px;
+      margin-bottom:6px;
+      line-height:1.6;
+      text-align:left;
+    }
+
+    #guestMessages .event strong{
+      font-size:12px;
+      color:var(--sage-dark);
+      text-align:left;
+      display:block;
+    }
+
+    .event{
+      background:#fff;
+      border-radius:20px;
+      padding:30px;
+      max-width:700px;
+      margin:0 auto 30px;
+      box-shadow:0 15px 35px rgba(0,0,0,.08);
+    }
+
+    .btn{
+      display:inline-block;
+      margin-top:16px;
+      padding:12px 26px;
+      border-radius:30px;
+      background:var(--sage);
+      color:#fff;
+      text-decoration:none;
+      transition:.3s;
+    }
+    .btn:hover{background:var(--sage-dark);}
+
+    footer{
+      background:var(--sage);
+      color:#fff;
+      padding:40px 20px;
+    }
+
+    /* Pop-up on scroll */
+    .popup{
+      position:fixed;
+      bottom:20px;right:20px;
+      background:#fff;
+      padding:18px 22px;
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,.15);
+      display:none;
+      z-index:999;
+      animation:fadeUp .6s ease;
+    }
+
+    @media(max-width:600px){
+      h1{font-size:30px;}
+      .names{font-size:34px;}
+    }
+    
+    /* SLIDER FOTO QS */
+    .photo-slider{
+      max-width:720px;
+      margin:0 auto 40px;
+      overflow:hidden;
+      border-radius:20px;
+      box-shadow:0 15px 35px rgba(0,0,0,.15);
+    }
+
+    .photo-slider .slides{
+      display:flex;
+      width:300%;
+      transition:transform .8s cubic-bezier(.22,.61,.36,1);
+    }
+
+    .photo-slider img{
+      width:100%;
+      object-fit:cover;
+    }
+
+    
+      30%{transform:translateX(0%);}
+      35%{transform:translateX(-100%);}
+      65%{transform:translateX(-100%);}
+      70%{transform:translateX(-200%);}
+      100%{transform:translateX(-200%);}
+    }
+
+  
+    /* FOTO SLIDER QS AR-RUM */
+    .photo-slider{
+  width:100%;
+  max-width:720px;
+  margin:0 auto 30px;
+  overflow:hidden;
+  border-radius:20px;
+}
+
+.photo-track{
+  display:flex;
+}
+
+.photo-track img{
+  width:100%;
+  flex-shrink:0;
+  display:block;
+}
+.profile{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  flex-wrap:wrap;
+  margin-top:40px;
+}
+
+.person{
+  max-width:260px;
+  text-align:center;
+}
+
+.person img{
+  width:180px;
+  height:180px;
+  object-fit:cover;
+  border-radius:50%;
+  border:6px solid var(--sage);
+  margin-bottom:16px;
+}
+
+
+    
+
+</style>
+</head>
+<body>
+
+<!-- COVER BUKU UNDANGAN -->
+<div id="bookCover" style="position:fixed;inset:0;background:linear-gradient(135deg,#8FAE9B,#F9F7F2);display:flex;align-items:center;justify-content:center;z-index:2000;">
+  <div style="background:#fff;padding:50px 40px;border-radius:24px;box-shadow:0 30px 60px rgba(0,0,0,.25);text-align:center;max-width:320px;animation:fadeUp 1.2s ease;">
+    <p style="letter-spacing:2px;">THE WEDDING OF</p>
+    <h1 style="font-family:'Playfair Display',serif;color:#6f8f7f;margin:20px 0;">Agung & Hilmi</h1>
+    <p style="margin-bottom:30px;">21 Mei 2030</p>
+    <button onclick="openInvitation()" style="padding:14px 30px;border:none;border-radius:30px;background:#8FAE9B;color:#fff;font-size:15px;cursor:pointer;">Buka Undangan</button>
+  </div>
+</div>
+
+
+<!-- MUSIK -->
+<audio id="music" src="assets/music-instrumental.mp3" autoplay loop></audio>
+
+<!-- COVER -->
+<section class="cover">
+  <div class="card">
+    <p>Undangan Pernikahan</p>
+    <h1 class="names">Agung & Hilmi</h1>
+    <div class="divider"></div>
+    <p>21 Mei 2030</p>
+  </div>
+</section>
+
+<!-- AYAT -->
+<section>
+  <!-- FOTO SLIDER QS AR-RUM -->
+ <div class="photo-slider">
+  <div class="photo-track" id="photoTrack">
+    <img src="assets/foto1.jpeg">
+    <img src="assets/foto2.jpeg">
+    <img src="assets/foto3.jpeg">
+  </div>
+</div>
+
+  <div class="ayat">
+    <h2>QS. Ar-Rum Ayat 21</h2>
+    <p>"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."</p>
+  </div>
+</section>
+
+
+<!-- PROFIL -->
+<section>
+  <h2>Mempelai</h2>
+  <div class="profile">
+    <div class="person">
+      <img src="assets/agung1.jpg" alt="Agung">
+      <h3>Agung Bintoro</h3>
+      <p>Anak keempat dari<br>Bapak Paimin (Alm) & Ibu Katriani</p>
+    </div>
+    <div class="person">
+      <img src="assets/hilmi.jpg" alt="Hilmi">
+      <h3>Hilmi Widianti</h3>
+      <p>Anak kedua dari<br>Bapak adang & Ibu Ade hajar</p>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section>
+  <h2>Menuju Akad Nikah</h2>
+  <div class="countdown" id="countdown"></div>
+</section>
+
+<!-- ACARA -->
+<section>
+  <div class="event">
+    <h2>Akad Nikah</h2>
+    <p>21 Mei 2030<br>Pukul 09.00 WIB - Selesai</p>
+    <p>Gedung Serbaguna Mulia</p>
+    <a class="btn" href="https://maps.app.goo.gl/ZikwC8QKZpM61McS7">Lihat Maps</a>
+  </div>
+
+  <div class="event">
+    <h2>Resepsi</h2>
+    <p>21 Mei 2030<br>Pukul 13.00 WIB - Selesai</p>
+    <p>Gedung Serbaguna Mulia</p>
+    <a class="btn" href="https://maps.app.goo.gl/ZikwC8QKZpM61McS7">Lihat Maps</a>
+  </div>
+</section>
+
+<!-- HADIAH -->
+<section>
+  <h2>Hadiah Pernikahan</h2>
+  <p>Bank Seabank<br><strong>901653974542</strong><br>a.n Agung Bintoro</p>
+</section>
+
+<!-- UCAPAN -->
+<section>
+  <h2>Doa & Ucapan</h2>
+  <p>Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan memberikan doa restu.</p>
+</section>
+
+<!-- FORM UCAPAN TAMU -->
+<section>
+  <h2>Buku Tamu & Konfirmasi Kehadiran</h2>
+  <p>Silakan tinggalkan nama, pesan, dan konfirmasi kehadiran Anda</p>
+
+  <form class="event" id="guestForm">
+    <input type="text" id="nama" placeholder="Nama Tamu" required style="width:100%;padding:14px;margin-bottom:14px;border-radius:12px;border:1px solid #ccc;">
+
+    <textarea id="pesan" placeholder="Pesan & Doa untuk Mempelai" rows="4" required style="width:100%;padding:14px;margin-bottom:14px;border-radius:12px;border:1px solid #ccc;"></textarea>
+
+    <select id="kehadiran" required style="width:100%;padding:14px;margin-bottom:20px;border-radius:12px;border:1px solid #ccc;">
+      <option value="">Konfirmasi Kehadiran</option>
+      <option value="Hadir">Hadir</option>
+      <option value="Tidak Hadir">Tidak Hadir</option>
+    </select>
+
+    <button type="submit" class="btn">Kirim Ucapan</button>
+  </form>
+
+  <div id="guestMessages" style="max-width:700px;margin:40px auto 0;text-align:left;"></div>
+</section>
+
+<footer>
+  <p>Terima Kasih</p>
+  <h2>Agung & Hilmi</h2>
+</footer>
+
+<div class="popup" id="popup">💚 Jangan lupa hadir & doakan kami</div>
+
+<script>
+  // COUNTDOWN
+  const target = new Date('2030-05-21T09:00:00').getTime();
+  const el = document.getElementById('countdown');
+
+  setInterval(()=>{
+    const now = new Date().getTime();
+    const diff = target - now;
+    if(diff < 0) return;
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff/(1000*60*60))%24);
+    const m = Math.floor((diff/(1000*60))%60);
+    const s = Math.floor((diff/1000)%60);
+    el.innerHTML = `
+      <div class="time"><h3>${d}</h3><span>Hari</span></div>
+      <div class="time"><h3>${h}</h3><span>Jam</span></div>
+      <div class="time"><h3>${m}</h3><span>Menit</span></div>
+      <div class="time"><h3>${s}</h3><span>Detik</span></div>`;
+  },1000);
+
+  // POPUP SCROLL
+  let shown = false;
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY > 400 && !shown){
+      document.getElementById('popup').style.display='block';
+      shown = true;
+    }
+  });
+  
+  function openInvitation(){
+    document.getElementById('bookCover').style.display='none';
+    document.getElementById('music').play();
+  }
+
+  
+  // SCROLL REVEAL SMOOTH (BISA ULANG SAAT SCROLL ATAS & BAWAH)
+  const sections = document.querySelectorAll('section');
+  const reveal = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+      } else {
+        entry.target.classList.remove('show');
+      }
+    });
+  },{
+    threshold:0.2,
+    rootMargin:'0px 0px -80px 0px'
+  });
+
+  sections.forEach(sec => reveal.observe(sec));
+
+
+  // FORM BUKU TAMU (TAMPIL DI HALAMAN)
+  const guestForm = document.getElementById('guestForm');
+  const guestMessages = document.getElementById('guestMessages');
+
+  guestForm.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const nama = document.getElementById('nama').value.trim();
+    const pesan = document.getElementById('pesan').value.trim();
+    const kehadiran = document.getElementById('kehadiran').value;
+
+    if(!nama || !pesan || !kehadiran) return;
+
+    const messageBox = document.createElement('div');
+    messageBox.className = 'event';
+    messageBox.innerHTML = `
+      <h3>${nama}</h3>
+      <p>${pesan}</p>
+      <strong>Status Kehadiran: ${kehadiran}</strong>
+    `;
+
+    // Tambahkan ke halaman (di bawah form)
+    guestMessages.prepend(messageBox);
+
+    // Reset form
+    guestForm.reset();
+
+    // Efek pop-up smooth untuk pesan baru
+    messageBox.classList.remove('show');
+    requestAnimationFrame(() => messageBox.classList.add('show'));
+  });
+
+  
+  // SLIDER FOTO MANUAL (GESER SAAT DISWIPE SAJA)
+  const slider = document.getElementById('photoSlider');
+  if(slider){
+    const slides = slider.querySelector('.slides');
+    let index = 0;
+    let startX = 0;
+    let isDown = false;
+
+    slider.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    });
+
+    slider.addEventListener('touchend', e => {
+      const endX = e.changedTouches[0].clientX;
+      if(startX - endX > 50 && index < 2) index++;
+      if(endX - startX > 50 && index > 0) index--;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    });
+
+    slider.addEventListener('mousedown', e => {
+      isDown = true;
+      startX = e.clientX;
+    });
+
+    slider.addEventListener('mouseup', e => {
+      if(!isDown) return;
+      const endX = e.clientX;
+      if(startX - endX > 50 && index < 2) index++;
+      if(endX - startX > 50 && index > 0) index--;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+      isDown = false;
+    });
+  }
+
+
+  // SLIDER FOTO QS AR-RUM (MANUAL SWIPE)
+  const sliderQS = document.getElementById('photoSlider');
+  const trackQS = document.getElementById('photoTrack');
+  let indexQS = 0;
+  let startXQS = 0;
+
+  if(sliderQS && trackQS){
+    sliderQS.addEventListener('touchstart', e => {
+      startXQS = e.touches[0].clientX;
+    });
+
+    sliderQS.addEventListener('touchend', e => {
+      const endX = e.changedTouches[0].clientX;
+      if(startXQS - endX > 50 && indexQS < 2) indexQS++;
+      if(endX - startXQS > 50 && indexQS > 0) indexQS--;
+      trackQS.style.transform = `translateX(-${indexQS * 100}%)`;
+    });
+
+    let mouseDown = false;
+    sliderQS.addEventListener('mousedown', e => {
+      mouseDown = true;
+      startXQS = e.clientX;
+    });
+
+    sliderQS.addEventListener('mouseup', e => {
+      if(!mouseDown) return;
+      const endX = e.clientX;
+      if(startXQS - endX > 50 && indexQS < 2) indexQS++;
+      if(endX - startXQS > 50 && indexQS > 0) indexQS--;
+      trackQS.style.transform = `translateX(-${indexQS * 100}%)`;
+      mouseDown = false;
+    });
+  }
+
+</script>
+
+</body>
+</html>
